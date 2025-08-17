@@ -4,14 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { 
-  BookOpen, 
-  Building2, 
-  Trophy, 
-  TrendingUp, 
+import {
+  BookOpen,
+  Building2,
+  Trophy,
+  TrendingUp,
   Calendar,
   Plus,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import { useAuthState } from "@/hooks/useAuthState";
 import { supabase } from "@/integrations/supabase/client";
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      navigate('/auth');
+      navigate("/auth");
     }
   }, [user, isLoading, navigate]);
 
@@ -43,15 +43,15 @@ export default function Dashboard() {
   const fetchProfile = async () => {
     try {
       const { data, error } = await supabase
-        .from('profiles')
-        .select('username, email, plan_type, sheets_created')
-        .eq('user_id', user?.id)
+        .from("profiles")
+        .select("username, email, plan_type, sheets_created")
+        .eq("user_id", user?.id)
         .maybeSingle();
 
       if (error) throw error;
       setProfile(data);
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
     }
   };
 
@@ -73,10 +73,11 @@ export default function Dashboard() {
   const planLimits = {
     free: 5,
     pro: 10,
-    premium: 20
+    premium: 20,
   };
 
-  const currentLimit = planLimits[profile?.plan_type as keyof typeof planLimits] || 5;
+  const currentLimit =
+    planLimits[profile?.plan_type as keyof typeof planLimits] || 5;
   const sheetsUsed = profile?.sheets_created || 0;
 
   return (
@@ -87,14 +88,17 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">
-                Welcome back, {profile?.username || 'Developer'}!
+                Welcome back, {profile?.username || "Developer"}!
               </h1>
               <p className="text-muted-foreground mt-2">
                 Continue your DSA journey and track your progress
               </p>
             </div>
-            <Badge variant={profile?.plan_type === 'free' ? 'secondary' : 'default'} className="text-sm">
-              {profile?.plan_type?.toUpperCase() || 'FREE'} Plan
+            <Badge
+              variant={profile?.plan_type === "free" ? "secondary" : "default"}
+              className="text-sm"
+            >
+              {profile?.plan_type?.toUpperCase() || "FREE"} Plan
             </Badge>
           </div>
         </div>
@@ -109,14 +113,21 @@ export default function Dashboard() {
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{sheetsUsed}/{currentLimit}</div>
-              <Progress value={(sheetsUsed / currentLimit) * 100} className="mt-2" />
+              <div className="text-2xl font-bold">
+                {sheetsUsed}/{currentLimit}
+              </div>
+              <Progress
+                value={(sheetsUsed / currentLimit) * 100}
+                className="mt-2"
+              />
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Problems Solved</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Problems Solved
+              </CardTitle>
               <Trophy className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -127,7 +138,9 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Current Streak
+              </CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -138,7 +151,9 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Companies Explored</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Companies Explored
+              </CardTitle>
               <Building2 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -165,17 +180,39 @@ export default function Dashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { name: "Striver A2Z", progress: 45, total: 180, difficulty: "Mixed" },
-                    { name: "Neetcode 150", progress: 78, total: 150, difficulty: "Medium-Hard" },
-                    { name: "My Custom Sheet", progress: 12, total: 50, difficulty: "Easy-Medium" }
+                    {
+                      name: "Striver A2Z",
+                      progress: 45,
+                      total: 180,
+                      difficulty: "Mixed",
+                    },
+                    {
+                      name: "Neetcode 150",
+                      progress: 78,
+                      total: 150,
+                      difficulty: "Medium-Hard",
+                    },
+                    {
+                      name: "My Custom Sheet",
+                      progress: 12,
+                      total: 50,
+                      difficulty: "Easy-Medium",
+                    },
                   ].map((sheet, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
                       <div className="space-y-1">
                         <h4 className="font-medium">{sheet.name}</h4>
                         <p className="text-sm text-muted-foreground">
-                          {sheet.progress}/{sheet.total} problems • {sheet.difficulty}
+                          {sheet.progress}/{sheet.total} problems •{" "}
+                          {sheet.difficulty}
                         </p>
-                        <Progress value={(sheet.progress / sheet.total) * 100} className="w-40" />
+                        <Progress
+                          value={(sheet.progress / sheet.total) * 100}
+                          className="w-40"
+                        />
                       </div>
                       <Button variant="ghost" size="sm">
                         <ExternalLink className="h-4 w-4" />
@@ -194,15 +231,31 @@ export default function Dashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { action: "Solved", problem: "Two Sum", company: "Google", time: "2 hours ago" },
-                    { action: "Started", problem: "Binary Tree Inorder", company: "Microsoft", time: "5 hours ago" },
-                    { action: "Completed", problem: "Valid Parentheses", company: "Facebook", time: "1 day ago" }
+                    {
+                      action: "Solved",
+                      problem: "Two Sum",
+                      company: "Google",
+                      time: "2 hours ago",
+                    },
+                    {
+                      action: "Started",
+                      problem: "Binary Tree Inorder",
+                      company: "Microsoft",
+                      time: "5 hours ago",
+                    },
+                    {
+                      action: "Completed",
+                      problem: "Valid Parentheses",
+                      company: "Facebook",
+                      time: "1 day ago",
+                    },
                   ].map((activity, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="h-2 w-2 bg-accent rounded-full" />
                       <div className="flex-1">
                         <p className="text-sm">
-                          <span className="font-medium">{activity.action}</span> {activity.problem}
+                          <span className="font-medium">{activity.action}</span>{" "}
+                          {activity.problem}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {activity.company} • {activity.time}
@@ -239,14 +292,15 @@ export default function Dashboard() {
             </Card>
 
             {/* Upgrade Prompt */}
-            {profile?.plan_type === 'free' && (
+            {profile?.plan_type === "free" && (
               <Card className="bg-gradient-primary text-white">
                 <CardHeader>
                   <CardTitle>Upgrade to Pro</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm opacity-90 mb-4">
-                    Get access to 10 sheets, advanced analytics, and priority support.
+                    Get access to 10 sheets, advanced analytics, and priority
+                    support.
                   </p>
                   <Button variant="secondary" className="w-full">
                     Upgrade Now
