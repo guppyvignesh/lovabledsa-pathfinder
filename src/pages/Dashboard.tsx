@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { useAuthState } from "@/hooks/useAuthState";
 import { supabase } from "@/integrations/supabase/client";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 interface UserProfile {
   username: string;
@@ -81,30 +83,33 @@ export default function Dashboard() {
   const sheetsUsed = profile?.sheets_created || 0;
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      {/* Header */}
-      <div className="bg-background border-b">
-        <div className="container py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">
-                Welcome back, {profile?.username || "Developer"}!
-              </h1>
-              <p className="text-muted-foreground mt-2">
-                Continue your DSA journey and track your progress
-              </p>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-1 bg-gradient-subtle">
+        {/* Header */}
+        <div className="bg-background border-b">
+          <div className="container py-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold">
+                  Welcome back, {profile?.username || "Developer"}!
+                </h1>
+                <p className="text-muted-foreground mt-2">
+                  Continue your DSA journey and track your progress
+                </p>
+              </div>
+              <Badge
+                variant={profile?.plan_type === "free" ? "secondary" : "default"}
+                className="text-sm"
+              >
+                {profile?.plan_type?.toUpperCase() || "FREE"} Plan
+              </Badge>
             </div>
-            <Badge
-              variant={profile?.plan_type === "free" ? "secondary" : "default"}
-              className="text-sm"
-            >
-              {profile?.plan_type?.toUpperCase() || "FREE"} Plan
-            </Badge>
           </div>
         </div>
-      </div>
 
-      <div className="container py-8">
+        <div className="container py-8">
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -333,7 +338,9 @@ export default function Dashboard() {
             </Card>
           </div>
         </div>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   );
 }
