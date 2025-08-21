@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Code2, User, LogOut } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useAuthState } from "@/hooks/useAuthState";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -47,6 +48,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
+          <ThemeToggle />
           {isLoading ? (
             <div className="h-8 w-16 bg-muted animate-pulse rounded" />
           ) : user ? (
@@ -93,7 +95,10 @@ export default function Header() {
                 </Link>
               ))}
               
-              <div className="pt-4 border-t">
+              <div className="pt-4 border-t space-y-2">
+                <div className="flex justify-center pb-2">
+                  <ThemeToggle />
+                </div>
                 {user ? (
                   <div className="space-y-2">
                     <Button variant="ghost" className="w-full justify-start" asChild>
