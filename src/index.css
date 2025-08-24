@@ -132,6 +132,32 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Ensure all text elements transition smoothly */
+  h1, h2, h3, h4, h5, h6, p, span, div, a, button {
+    @apply transition-colors duration-300;
+  }
+  
+  /* Fix button visibility in dark mode */
+  .dark button {
+    @apply text-foreground;
+  }
+  
+  /* Fix card visibility in dark mode */
+  .dark .bg-card {
+    @apply bg-card text-card-foreground;
+  }
+  
+  /* Fix muted text visibility */
+  .dark .text-muted-foreground {
+    @apply text-muted-foreground;
+  }
+  
+  /* Fix border visibility in dark mode */
+  .dark .border {
+    @apply border-border;
   }
 }
