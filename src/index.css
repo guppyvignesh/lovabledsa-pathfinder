@@ -141,23 +141,5 @@
     @apply transition-colors duration-300;
   }
   
-  /* Fix button visibility in dark mode */
-  .dark button {
-    @apply text-foreground;
-  }
-  
-  /* Fix card visibility in dark mode */
-  .dark .bg-card {
-    @apply bg-card text-card-foreground;
-  }
-  
-  /* Fix muted text visibility */
-  .dark .text-muted-foreground {
-    @apply text-muted-foreground;
-  }
-  
-  /* Fix border visibility in dark mode */
-  .dark .border {
-    @apply border-border;
-  }
+  /* Ensure proper dark mode colors without circular dependencies */
 }
